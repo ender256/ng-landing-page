@@ -9,7 +9,7 @@
 	  <p class="lead">
 	    Do something about it!
 	  </p>
-	  <p><a class="btn btn-lg btn-success" ng-href="#">Get Started <span class="glyphicon glyphicon-forward"></span></a></p>
+	  <p><a class="btn btn-lg btn-success" href="#" ng-click="scrollTo('contact')">Get Started <span class="glyphicon glyphicon-forward"></span></a></p>
   	</div>
   	
   	<div class="downLink container">
@@ -38,10 +38,8 @@
 	  	
 		<a id="anchor_team"></a>
 		<h4>The Team</h4>
-		<div class="row" on-scroll-visible="350">
-			<teammate info="{name:'Mark Z.',fbId:'4',desc:'The founder of Facebook... Ever heard of it?'}"></teammate>
-			<teammate info="{name:'Billy G.',fbId:'216311481960',desc:'The founder of Microsoft... Ever heard of it?'}"></teammate>
-			<teammate info="{name:'Cthulhu',fbId:'10252302034',desc:'The Great Old One: waiting in the darkest corners of the earth...'}"></teammate>
+		<div class="row" on-scroll-visible="scrollActive" on-scroll-visible-buffer="350">
+			<teammate ng-repeat="info in teammates" info="info"></teammate>
 		</div>
 	  	
 		<a id="anchor_contact"></a>
@@ -76,3 +74,12 @@
   	</div>
   	
 </div>
+
+<div class="footer">
+	<div class="container">
+		<a href="#/legal">Legal Stuff</a> | &copy; {{now | date:'yyyy'}}	
+	</div>
+</div>
+
+
+

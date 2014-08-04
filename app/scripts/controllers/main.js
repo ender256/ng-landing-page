@@ -10,6 +10,7 @@
  */
 angular.module('ngTestApp')
 	.controller('MainCtrl', function($scope, $document, $http) {
+		$scope.now = Date.now();
 		
 		/*
 		 * Scroll-to links
@@ -20,6 +21,18 @@ angular.module('ngTestApp')
 				scrollTop: $document.find('#anchor_' + tag).offset().top - $scope.floatingHeaderHeight
 			}, 1000);
 		};
+		
+		/*
+		 * Fetch team
+		 */
+		$scope.teammates = [];
+		$http.get('/data/team.json')
+			.success(function(result){
+				$scope.teammates = result;
+	        })
+	        .error(function() {
+	        	console.log('teammates not returned!');
+	        });
 		
 		/*
 		 * Comment functionality
@@ -126,23 +139,49 @@ angular.module('ngTestApp')
 		return {
 			restrict: 'A',
 			link: function(scope, element, attrs) {
-				var buffer = parseFloat(attrs.onScrollVisible);
 				
+				// get class name to add
+				var className = attrs.onScrollVisible;
+				
+				// get buffer (optional) that must scroll past top before activating
+				var buffer = parseFloat(attrs.onScrollVisibleBuffer);
+				if( isNaN(buffer) ) {
+					buffer = 0;
+				}
+				
+				// get the test (this) and target elements (optionally not this)
+				var testElement = attrs.$$element;	// element scroll relates to
+				var targetElement = testElement;	// element class added to
+				if( attrs.onScrollVisibleTarget !== undefined ) {
+					targetElement = angular.element(attrs.onScrollVisibleTarget).last();
+				}
+				
+				// bind to scroll event
 				angular.element($window).bind('scroll', function() {
-					var element = attrs.$$element;
-					var elementTop = element.offset().top;
+					var testElementTop = testElement.offset().top;
 					var screenHeight = angular.element($window).height();
-					if( this.pageYOffset + screenHeight >= elementTop + buffer ) {
-						if( !element.hasClass('scrollActive') ) {
-							element.addClass('scrollActive');
-						}
-					} else {
-						if( element.hasClass('scrollActive') ) {
-							element.removeClass('scrollActive');
+					
+					// in case targetElement not set yet (maybe added to DOM late), try now...
+					if( attrs.onScrollVisibleTarget !== undefined ) {
+						if( targetElement.length === 0 ) {
+							targetElement = angular.element(attrs.onScrollVisibleTarget).last();
 						}
 					}
-					if( !scope.$$phase ) {
-						scope.$apply();
+					
+					// if there is a target, can check about manipulating it...
+					if( targetElement.length === 1 ) {
+						if( this.pageYOffset + screenHeight >= testElementTop + buffer ) {
+							if( !targetElement.hasClass(className) ) {
+								targetElement.addClass(className);
+							}
+						} else {
+							if( targetElement.hasClass(className) ) {
+								targetElement.removeClass(className);
+							}
+						}
+						if( !scope.$$phase ) {
+							scope.$apply();
+						}
 					}
 				});
 			}
