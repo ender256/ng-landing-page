@@ -1,23 +1,78 @@
-<div class="jumbotron">
-  <h1>'Allo, 'Allo!</h1>
-  <p class="lead">
-    <img src="images/yeoman.png" alt="I'm Yeoman"><br>
-    Always a pleasure scaffolding your apps.
-  </p>
-  <p><a class="btn btn-lg btn-success" ng-href="#">Splendid!<span class="glyphicon glyphicon-ok"></span></a></p>
+<div class="jumbotron aboveTheFold">
+	<div class="backgroundFill" parallax="0.5"></div>
+	<div class="screenBackground"></div>
+	
+	<header></header>
+	
+	<div class="container content">
+	  <h1>Meetings are the Worst</h1>
+	  <p class="lead">
+	    Do something about it!
+	  </p>
+	  <p><a class="btn btn-lg btn-success" ng-href="#">Get Started <span class="glyphicon glyphicon-forward"></span></a></p>
+  	</div>
+  	
+  	<div class="downLink container">
+  		<a href ng-click="scrollTo('product')">▼ ▼ ▼</a>
+  	</div>
+  	
 </div>
 
-<div class="row marketing">
-  <h4>HTML5 Boilerplate</h4>
-  <p>
-    HTML5 Boilerplate is a professional front-end template for building fast, robust, and adaptable web apps or sites.
-  </p>
+<div class="marketing belowTheFold">
 
-  <h4>Angular</h4>
-  <p>
-    AngularJS is a toolset for building the framework most suited to your application development.
-  </p>
+	<header stick-to-top></header>
 
-  <h4>Karma</h4>
-  <p>Spectacular Test Runner for JavaScript.</p>
+	<div class="container">
+	
+		<a id="anchor_product"></a>
+		<h4>Our Product</h4>
+	  	<p>
+	  		Bacon ipsum dolor sit amet pork loin pork t-bone swine cow corned beef tongue spare ribs ground round. Ball tip kevin meatloaf, leberkas tenderloin pork loin rump landjaeger jowl turducken boudin flank ham drumstick short ribs. Meatloaf beef ribs bresaola ground round, pork chuck frankfurter tenderloin turducken beef corned beef kielbasa ham hock. Pork beef ribs landjaeger meatball shoulder, short ribs strip steak beef pork loin bresaola t-bone chuck pork belly frankfurter. Ham frankfurter turkey shankle, landjaeger corned beef beef cow pastrami kevin.
+	  	</p>
+	
+		<a id="anchor_about"></a>
+		<h4>About Us</h4>
+	  	<p>
+	  		Bacon ipsum dolor sit amet pork loin pork t-bone swine cow corned beef tongue spare ribs ground round. Ball tip kevin meatloaf, leberkas tenderloin pork loin rump landjaeger jowl turducken boudin flank ham drumstick short ribs. Meatloaf beef ribs bresaola ground round, pork chuck frankfurter tenderloin turducken beef corned beef kielbasa ham hock. Pork beef ribs landjaeger meatball shoulder, short ribs strip steak beef pork loin bresaola t-bone chuck pork belly frankfurter. Ham frankfurter turkey shankle, landjaeger corned beef beef cow pastrami kevin.
+	  	</p>
+	  	
+		<a id="anchor_team"></a>
+		<h4>The Team</h4>
+		<div class="row" on-scroll-visible="350">
+			<teammate info="{name:'Mark Z.',fbId:'4',desc:'The founder of Facebook... Ever heard of it?'}"></teammate>
+			<teammate info="{name:'Billy G.',fbId:'216311481960',desc:'The founder of Microsoft... Ever heard of it?'}"></teammate>
+			<teammate info="{name:'Cthulhu',fbId:'10252302034',desc:'The Great Old One: waiting in the darkest corners of the earth...'}"></teammate>
+		</div>
+	  	
+		<a id="anchor_contact"></a>
+		<h4>Get In Touch</h4>
+	  	<p>
+	  		Bacon ipsum dolor sit amet pork loin pork t-bone swine cow corned beef tongue spare ribs ground round. Ball tip kevin meatloaf, leberkas tenderloin pork loin rump landjaeger jowl turducken boudin flank ham drumstick short ribs. Meatloaf beef ribs bresaola ground round, pork chuck frankfurter tenderloin turducken beef corned beef kielbasa ham hock. Pork beef ribs landjaeger meatball shoulder, short ribs strip steak beef pork loin bresaola t-bone chuck pork belly frankfurter. Ham frankfurter turkey shankle, landjaeger corned beef beef cow pastrami kevin.
+	  	</p>
+	  	
+  		<form class="form-vertical" ng-submit="addComment()">
+  			<div class="form-group">
+				<label for="inputEmail">Email</label>
+				<input ng-model="comment.email" type="email" class="form-control" placeholder="you@email.com" />
+			</div>
+			<div class="form-group">
+				<label for="inputEmail">Message</label>
+				<textarea ng-model="comment.message" class="form-control" placeholder="Your message..."></textarea>
+			</div>
+			<div class="checkbox">
+				<label><input type="checkbox" ng-model="comment.anonymous" /> Hide my email address</label>
+			</div>
+	  		<button class="btn btn-primary"><span class="glyphicon glyphicon-comment"></span> Submit</button>
+  		</form>
+  		
+  		
+	  	<div ng-repeat="comment in comments | orderBy:'timestamp':true">
+  			<hr class="clearfix" />
+  			<p class="pull-right">{{comment.timestamp | date:'h:mma M/d/yy'}}</p>
+  			<h6><span class="glyphicon glyphicon-comment"></span> {{comment.email}}</h6>
+	  		<p>{{comment.message}}</p>
+	  	</div>
+	  	
+  	</div>
+  	
 </div>

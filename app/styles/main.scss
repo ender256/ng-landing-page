@@ -1,5 +1,6 @@
 $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
 // bower:scss
+@import "bootstrap-sass-official/assets/stylesheets/bootstrap.scss";
 // endbower
 
 .browsehappy {
@@ -9,10 +10,16 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
   padding: 0.2em 0;
 }
 
+/* Mixins */
+@mixin borderradius($radius) {
+	-webkit-border-radius: $radius;
+	-moz-border-radius: $radius;
+	border-radius: $radius;
+}
+
 /* Space out content a bit */
-body {
-  padding-top: 20px;
-  padding-bottom: 20px;
+html,body,.view {
+	height: 100%;
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
@@ -25,16 +32,27 @@ body {
 
 /* Custom page header */
 .header {
-  border-bottom: 1px solid #e5e5e5;
-
-  /* Make the masthead heading the same height as the navigation */
-  h3 {
-    margin-top: 0;
-    margin-bottom: 0;
-    line-height: 40px;
-    padding-bottom: 19px;
-  }
+  	border-bottom: 1px solid #e5e5e5;
+  	width: 100%;
+  
+	h3 {
+		text-align: left;
+		font-size: 3em;
+		
+	    margin-top: 0;
+	    margin-bottom: 0;
+		padding-bottom: 19px;
+	}
+	
+	a {
+		font-size: 1.33em;
+	}
+	
+	.container {
+		max-width: 100%;
+	}
 }
+
 
 /* Custom page footer */
 .footer {
@@ -47,24 +65,139 @@ body {
   margin: 30px 0;
 }
 
-/* Main marketing message and sign up button */
-.jumbotron {
-  text-align: center;
-  border-bottom: 1px solid #e5e5e5;
+.fillScreen {
+	position: absolute;
+	top: 0;
+	left: 0;
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	min-height: 100%;
+	width: 100%;
+	min-width: 100%;
+}
 
-  .btn {
-    font-size: 21px;
-    padding: 14px 24px;
-  }
+/* Main marketing message and sign up button */
+.aboveTheFold {
+	position: relative;
+	display: block;
+  	height: 100%;
+  	background: transparent !important;
+  	overflow: hidden;
+
+  	text-align: center;
+  	border-bottom: 1px solid #e5e5e5;
+  	color: white;
+  	padding: 16px;
+  	margin-bottom: 0;
+
+	.backgroundFill {
+		@extend .fillScreen;
+		
+		background: url("/images/meeting.jpg") no-repeat center center;
+		background-size: cover;
+		z-index: -2;
+	}
+	.screenBackground {
+		@extend .fillScreen;
+		
+		background: rgba(60,60,60,0.33);
+		z-index: -1;
+	}
+	
+	.header {
+		$color: white;
+	  
+		h3 {
+			color: $color;
+		}
+		
+		a {
+			color: $color;
+			&:hover,
+			&:focus {
+				background-color: rgba(255,255,255,0.33) !important;
+			}
+		}
+	}
+
+	.content {
+		position: absolute;
+		top: 35%;
+	}
+	
+	.downLink {
+		position: absolute;
+		bottom: 0;
+		padding: 0.8em;
+		font-size: 1.4em;
+		
+		a {
+			color: white;
+			&:hover {
+				text-decoration: none;
+			}
+		}
+	}
+}
+
+.belowTheFold {
+	position: relative;
+	background: white;
+	z-index: 1;
+	
+	.header {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		z-index: 100;
+		
+		padding-top: 19px;
+		background: white;
+	}
+	
+	.teammate {
+		text-align: center;
+		
+		img {
+			@include borderradius(8px);
+			width: 100%;
+			height: auto;
+		}
+		
+		h4 {
+			margin: 0;
+			color: #AAAAAA;
+			-webkit-transition: all 1s ease;
+			transition: all 1s ease;
+		}
+		
+		p {
+			font-style: italic;
+			color: #777;
+		}
+		
+		&:hover {
+			opacity: 0.9;
+		}
+	}
+	
+}
+
+.scrollActive .teammate h4 {
+	color: blue;
+	text-decoration: underline;
 }
 
 /* Supporting marketing content */
 .marketing {
-  margin: 40px 0;
+	padding-top: 95px;
+  	padding-bottom: 40px;
 
-  p + h4 {
-    margin-top: 28px;
-  }
+  	& > .container > h4 {
+    	margin-top: 60px; 
+  	}
 }
 
 /* Responsive: Portrait tablets and up */
